@@ -3,6 +3,7 @@ const path = require("path")
 const argv = require("minimist")
 const puppeteer = require("puppeteer")
 const nodemailer = require("nodemailer")
+const Queue = require('async-await-queue')
 
 Array.prototype.chunk = function(n){ return require("lodash").chunk(this, n) }
 Array.prototype.unique = function(){ return require("lodash").uniq(this) }
@@ -154,17 +155,16 @@ class BruteResume {
         }
 
         await page.close()
-        await (await this.#browser()).close()
 
         return this.brands
     }
 }
 
+const delay = new Queue(1, 2000)
 const bruteResumer = new BruteResume()
 
-bruteResumer.fetchBrands().then(brands => {
-    brands.forEach(brand => {
-        bruteResumer.sendMail(brand)
-    })
-    process.exit(0)
+bruteResumer.fetchBrands().then(async (brands) => {
+    for (const brand of brands) {
+      await delay.run(() => bruteResumer.sendMail(brand))
+    }
 })
