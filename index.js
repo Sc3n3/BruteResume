@@ -17,7 +17,7 @@ const args = argv(process.argv.slice(2), {
     message: 
         'Merhaba Sayın <strong>{{name}}</strong> yetkilisi;<br/><br/>'+
         'Acil olarak iş arayışım mevcuttur. Firmanızda uygun bir pozisyon varsa dönüş yapabilirseniz sevinirim.<br/>'+
-        'İyi çalışmalar dilerim.<br/><br/>'
+        'İyi çalışmalar dilerim.<br/><br/>'+
         '<a href="https://github.com/Sc3n3">GitHub</a>',
     smtp: 'smtp.office365.com',
     port: 587,
